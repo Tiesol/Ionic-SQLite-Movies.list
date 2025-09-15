@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEditing ? 'Editar Película' : 'Nueva Película' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="form-container">
+  <div *ngIf="isLoading && isEditing" class="loading-container">
+    <p>Cargando película... ⏳</p>
+  </div>
+
+  <div *ngIf="!isLoading || !isEditing">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          {{ isEditing ? 'Editar información de la película' : 'Agregar nueva película' }}
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <form (ngSubmit)="saveMovie()" class="form-inputs">
+          <ion-item>
+            <ion-label position="stacked">Título *</ion-label>
+            <ion-input
+              [(ngModel)]="movieForm.title"
+              name="title"
+              placeholder="Ingresa el título de la película"
+              [disabled]="isLoading"
+              maxlength="100">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Descripción *</ion-label>
+            <ion-textarea
+              [(ngModel)]="movieForm.description"
+              name="description"
+              placeholder="Describe la película"
+              rows="4"
+              [disabled]="isLoading"
+              maxlength="500">
+            </ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">URL de imagen</ion-label>
+            <ion-input
+              [(ngModel)]="movieForm.imageUrl"
+              name="imageUrl"
+              placeholder="https://ejemplo.com/imagen.jpg"
+              [disabled]="isLoading">
+            </ion-input>
+          </ion-item>
+
+          <div *ngIf="movieForm.imageUrl.trim()" class="image-preview-container">
+            <div class="preview-title">
+              <h3>Vista previa:</h3>
+            </div>
+            <div class="preview-wrapper">
+              <ion-img 
+                [src]="movieForm.imageUrl" 
+                [alt]="movieForm.title"
+                class="preview-image">
+              </ion-img>
+              <div class="preview-overlay">
+                📷 {{ movieForm.title || 'Imagen de la película' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button 
+              expand="block" 
+              type="submit"
+              class="primary-btn"
+              [disabled]="isLoading || !movieForm.title.trim() || !movieForm.description.trim()">
+              <span *ngIf="isLoading">⏳ Guardando...</span>
+              <span *ngIf="!isLoading">{{ isEditing ? '💾 Actualizar Película' : '💾 Guardar Película' }}</span>
+            </ion-button>
+            
+            <ion-button 
+              *ngIf="isEditing"
+              expand="block" 
+              fill="outline" 
+              class="danger-btn"
+              (click)="deleteMovie()" 
+              [disabled]="isLoading">
+              🗑️ Eliminar película
+            </ion-button>
+            
+            <ion-button 
+              expand="block" 
+              fill="outline" 
+              class="secondary-btn"
+              (click)="goBack()" 
+              [disabled]="isLoading">
+              ← Volver al inicio
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

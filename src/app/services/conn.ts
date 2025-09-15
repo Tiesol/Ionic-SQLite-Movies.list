@@ -12,6 +12,10 @@ export class Conn {
   private isInitializing = false;
   private isDbReady = false;
 
+  constructor() {
+    this.initializingDB();
+  }
+  
   private async initializingDB() {
     if (this.isDbReady || this.isInitializing) return;
 

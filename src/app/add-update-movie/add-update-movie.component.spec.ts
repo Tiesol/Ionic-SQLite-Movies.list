@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FormComponent } from './form.component';
+import { AddUpdateMovieComponent } from './add-update-movie.component';
 
-describe('FormComponent', () => {
-  let component: FormComponent;
-  let fixture: ComponentFixture<FormComponent>;
+describe('AddUpdateMovieComponent', () => {
+  let component: AddUpdateMovieComponent;
+  let fixture: ComponentFixture<AddUpdateMovieComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormComponent ],
+      declarations: [ AddUpdateMovieComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FormComponent);
+    fixture = TestBed.createComponent(AddUpdateMovieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

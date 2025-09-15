@@ -6,33 +6,29 @@ import { Movie } from '../models/movie.model';
   providedIn: 'root'
 })
 export class MovieRepository {
-  private tableName = 'movies';
+    private tableName = 'movies';
+    constructor(private conn: Conn) {}
 
-  constructor(private conn: Conn) {}
-
-  // CRUD básico - esto es lo que realmente necesitas
-  async create(movie: Omit<Movie, 'id'>): Promise<Movie> {
-    const statement = `
-      INSERT INTO ${this.tableName} (title, description, imageUrl)
-      VALUES (?, ?, ?)
-    `;
-    
-    try {
-      const result = await this.conn.executeNonQuery(statement, [
-        movie.title,
-        movie.description,
-        movie.imageUrl
-      ]);
-      
-      return {
-        id: result.insertId,
-        ...movie
-      };
-    } catch (error) {
-      console.error('Error creating movie', error);
-      throw error;
+    async create(movie: Omit<Movie, 'id'>): Promise<Movie> {
+        const statement = `
+        INSERT INTO ${this.tableName} (title, description, imageUrl)
+        VALUES (?, ?, ?)
+        `;
+        try {
+            const result = await this.conn.executeNonQuery(statement, [
+            movie.title,
+            movie.description,
+            movie.imageUrl
+        ]);
+        return {
+            id: result.insertId,
+            ...movie
+        };
+        } catch (error) {
+        console.error('Error creating movie', error);
+        throw error;
+        }
     }
-  }
 
   async findAll(): Promise<Movie[]> {
     const statement = `SELECT * FROM ${this.tableName} ORDER BY id DESC`;
