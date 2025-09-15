@@ -11,12 +11,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Loading spinner -->
   <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; height: 200px;">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <!-- Error message -->
   <ion-card *ngIf="error && !isLoading" color="danger">
     <ion-card-content>
       <p>{{ error }}</p>
@@ -26,7 +24,6 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Botón para agregar películas de prueba -->
   <ion-card *ngIf="!isLoading && movies.length === 0 && !error">
     <ion-card-header>
       <ion-card-title>No hay películas</ion-card-title>
@@ -39,16 +36,13 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Lista de películas -->
   <div *ngIf="!isLoading && movies.length > 0">
-    <!-- Contador de películas -->
     <ion-item>
       <ion-label>
         <h2>{{ movies.length }} película(s) encontrada(s)</h2>
       </ion-label>
     </ion-item>
 
-    <!-- Lista de películas estilo del primer proyecto -->
     <ion-list>
       <ion-item *ngFor="let movie of movies" (click)="viewMovieDetail(movie)" button>
         <ion-label>
@@ -72,7 +66,6 @@
     </ion-list>
   </div>
 
-  <!-- Floating Action Button para agregar película -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="start" style="margin: 20px;">
     <ion-fab-button (click)="createNewMovie()" color="primary" size="small">
       <strong style="font-size: 24px;">+</strong>
